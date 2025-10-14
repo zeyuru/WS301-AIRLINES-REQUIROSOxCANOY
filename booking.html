@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cebu Pacific Airlines | Book A Flight</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">✈</div>
+      <div>
+        <h1>Cebu Pacific Airlines</h1>
+        <p>Flight Booking System</p>
+      </div>
+    </div>
+    <a href="home.html" class="btn-home">← Home</a>
+  </header>
+
+  <main class="container">
+
+    <!-- STEP 1: Booking Details -->
+    <section id="booking-section" class="card">
+      <h2>1. Booking Details</h2>
+      <div class="form-grid">
+        <div>
+          <label>From</label>
+          <select id="from">
+            <option value="MNL">Manila (MNL)</option>
+            <option value="CEB">Cebu (CEB)</option>
+            <option value="DVO">Davao (DVO)</option>
+          </select>
+        </div>
+        <div>
+          <label>To</label>
+          <select id="to">
+            <option value="CEB">Cebu (CEB)</option>
+            <option value="MNL">Manila (MNL)</option>
+            <option value="DVO">Davao (DVO)</option>
+          </select>
+        </div>
+        <div>
+          <label>Flight Type</label>
+          <select id="flightType">
+            <option value="oneway">One Way</option>
+            <option value="round">Round Trip</option>
+          </select>
+        </div>
+        <div>
+          <label>Depart Date</label>
+          <input type="date" id="departDate">
+        </div>
+        <div id="returnGroup">
+          <label>Return Date</label>
+          <input type="date" id="returnDate">
+        </div>
+        <div>
+          <label>Passengers</label>
+          <input type="number" id="passengerCount" min="1" max="9" value="1">
+        </div>
+      </div>
+      <div class="btn-row">
+        <button id="searchFlights" class="btn-primary">Search Flights</button>
+      </div>
+    </section>
+
+    <!-- STEP 2: Available Flights -->
+    <section id="flights-section" class="card hidden">
+      <h2>2. Available Flights</h2>
+      <div id="flightsContainer" class="flights-grid"></div>
+      <div class="btn-row">
+        <button id="toPassenger" class="btn-primary hidden">Next → Passenger Info</button>
+      </div>
+    </section>
+
+    <!-- STEP 3: Passenger Info -->
+    <section id="passenger-section" class="card hidden">
+      <h2>3. Passenger Information</h2>
+      <form id="passengerForm"></form>
+      <div class="btn-row">
+        <button type="submit" id="submitPassenger" class="btn-primary">Submit</button>
+      </div>
+    </section>
+
+    <!-- STEP 4: Summary -->
+    <section id="summary-section" class="card hidden">
+      <h2>4. Summary</h2>
+      <div id="summaryDetails"></div>
+      <div class="btn-row">
+        <button id="bookNow" class="btn-primary">Book Now</button>
+      </div>
+      <div id="successMsg" class="success hidden">
+        ✅ Booking Successful! Thank you for flying with Cebu Pacific Airlines!
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
