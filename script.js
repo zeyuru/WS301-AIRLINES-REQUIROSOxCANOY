@@ -1,20 +1,16 @@
-// === Cebu Pacific Airlines Booking System ===
-
-// Sample flight schedules (arrays)
-const departFlights = [
+ const departFlights = [
   { flightNo: "5J 560", from: "MNL", to: "CEB", time: "08:00", duration: "1h 15m", price: 2499, seats: 20, fare: "Promo Fare", terminal: "3" },
   { flightNo: "5J 561", from: "MNL", to: "DVO", time: "11:30", duration: "2h 00m", price: 2999, seats: 18, fare: "Regular", terminal: "2" },
   { flightNo: "5J 562", from: "MNL", to: "CEB", time: "15:45", duration: "1h 20m", price: 2699, seats: 25, fare: "None", terminal: "3" }
-];
+ ];
 
-const returnFlights = [
+ const returnFlights = [
   { flightNo: "5J 563", from: "CEB", to: "MNL", time: "10:15", duration: "1h 10m", price: 2599, seats: 15, fare: "Promo Fare", terminal: "2" },
   { flightNo: "5J 564", from: "DVO", to: "MNL", time: "13:30", duration: "2h 05m", price: 2899, seats: 19, fare: "Regular", terminal: "1" },
   { flightNo: "5J 565", from: "CEB", to: "MNL", time: "18:00", duration: "1h 15m", price: 2799, seats: 21, fare: "None", terminal: "3" }
-];
+ ];
 
-// === ELEMENTS ===
-const flightType = document.getElementById("flightType");
+ const flightType = document.getElementById("flightType");
 const returnGroup = document.getElementById("returnGroup");
 const searchBtn = document.getElementById("searchFlights");
 const flightsSection = document.getElementById("flights-section");
@@ -25,10 +21,9 @@ const passengerForm = document.getElementById("passengerForm");
 const summarySection = document.getElementById("summary-section");
 const summaryDetails = document.getElementById("summaryDetails");
 const bookNowBtn = document.getElementById("bookNow");
-const successMsg = document.getElementById("successMsg");
+ const successMsg = document.getElementById("successMsg");
 
-// === EVENT: show/hide return date ===
-flightType.addEventListener("change", () => {
+  flightType.addEventListener("change", () => {
   if (flightType.value === "oneway") returnGroup.style.display = "none";
   else returnGroup.style.display = "block";
 });
