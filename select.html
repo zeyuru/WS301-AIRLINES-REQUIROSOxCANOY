@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Flight | Cebu Pacific Airlines</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo">✈</div>
+      <div>
+        <h1>Cebu Pacific Airlines</h1>
+        <p>Select Your Flight</p>
+      </div>
+    </div>
+    <a href="home.html" class="btn-home">← Home</a>
+  </header>
+
+  <main class="container">
+    <section class="card">
+      <h2 id="selectTitle">Available Flights</h2>
+
+      <div id="flightsContainer" class="flights-grid"></div>
+      <div id="returnFlightsContainer" class="flights-grid"></div>
+
+      <div class="btn-row">
+        <button id="backToBooking" class="btn-primary">← Back</button>
+        <button id="proceedToPassenger" class="btn-primary" disabled>Next → Passenger Info</button>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>

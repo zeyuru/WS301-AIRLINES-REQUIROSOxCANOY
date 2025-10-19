@@ -1,141 +1,257 @@
- const departFlights = [
-  { flightNo: "5J 560", from: "MNL", to: "CEB", time: "08:00", duration: "1h 15m", price: 2499, seats: 20, fare: "Promo Fare", terminal: "3" },
-  { flightNo: "5J 561", from: "MNL", to: "DVO", time: "11:30", duration: "2h 00m", price: 2999, seats: 18, fare: "Regular", terminal: "2" },
-  { flightNo: "5J 562", from: "MNL", to: "CEB", time: "15:45", duration: "1h 20m", price: 2699, seats: 25, fare: "None", terminal: "3" }
- ];
 
- const returnFlights = [
-  { flightNo: "5J 563", from: "CEB", to: "MNL", time: "10:15", duration: "1h 10m", price: 2599, seats: 15, fare: "Promo Fare", terminal: "2" },
-  { flightNo: "5J 564", from: "DVO", to: "MNL", time: "13:30", duration: "2h 05m", price: 2899, seats: 19, fare: "Regular", terminal: "1" },
-  { flightNo: "5J 565", from: "CEB", to: "MNL", time: "18:00", duration: "1h 15m", price: 2799, seats: 21, fare: "None", terminal: "3" }
- ];
+const oneWayFlights = [
+  { flightNo: "5J 560", from: "MNL", to: "CEB", departDate: "2025-10-21", time: "08:00 AM", hours: "1h 15m", price: 2499, seats: 20, fare: "Promo Fare", terminal: "Terminal 3" },
+  { flightNo: "5J 561", from: "MNL", to: "DVO", departDate: "2025-10-22", time: "02:30 PM", hours: "2h 00m", price: 2999, seats: 25, fare: "Regular", terminal: "Terminal 2" },
+  { flightNo: "5J 562", from: "CEB", to: "MNL", departDate: "2025-10-23", time: "09:00 AM", hours: "1h 20m", price: 2599, seats: 22, fare: "None", terminal: "Terminal 1" }
+];
 
- const flightType = document.getElementById("flightType");
-const returnGroup = document.getElementById("returnGroup");
-const searchBtn = document.getElementById("searchFlights");
-const flightsSection = document.getElementById("flights-section");
-const flightsContainer = document.getElementById("flightsContainer");
-const toPassengerBtn = document.getElementById("toPassenger");
-const passengerSection = document.getElementById("passenger-section");
-const passengerForm = document.getElementById("passengerForm");
-const summarySection = document.getElementById("summary-section");
-const summaryDetails = document.getElementById("summaryDetails");
-const bookNowBtn = document.getElementById("bookNow");
- const successMsg = document.getElementById("successMsg");
+const roundTripFlights = [
+  { flightNo: "5J 700", from: "MNL", to: "CEB", departTime: "07:00 AM", returnTime: "05:00 PM", departDate: "2025-10-21", returnDate: "2025-10-28", price: 4999, seats: 25, hours: "1h 20m", fare: "Regular", terminal: "Terminal 3" },
+  { flightNo: "5J 701", from: "CEB", to: "DVO", departTime: "08:30 AM", returnTime: "06:30 PM", departDate: "2025-10-22", returnDate: "2025-10-29", price: 5599, seats: 18, hours: "1h 45m", fare: "Promo Fare", terminal: "Terminal 2" },
+  { flightNo: "5J 702", from: "MNL", to: "ILO", departTime: "09:15 AM", returnTime: "04:30 PM", departDate: "2025-10-23", returnDate: "2025-10-30", price: 4799, seats: 20, hours: "1h 00m", fare: "Regular", terminal: "Terminal 1" }
+];
+
+
+const page = window.location.pathname.split("/").pop();
+
+if (page === "booking.html") initBooking();
+if (page === "select.html") initSelect();
+if (page === "passenger.html") initPassenger();
+if (page === "success.html") initSuccess();
+
+
+
+
+function initBooking() {
+  const flightType = document.getElementById("flightType");
+  const returnDiv = document.getElementById("returnDiv");
 
   flightType.addEventListener("change", () => {
-  if (flightType.value === "oneway") returnGroup.style.display = "none";
-  else returnGroup.style.display = "block";
-});
-
-// === SEARCH FLIGHTS ===
-searchBtn.addEventListener("click", () => {
-  const type = flightType.value;
-  const from = document.getElementById("from").value;
-  const to = document.getElementById("to").value;
-  const departDate = document.getElementById("departDate").value;
-  const returnDate = document.getElementById("returnDate").value;
-  const passengerCount = parseInt(document.getElementById("passengerCount").value);
-
-  // do-while validation for passengers
-  let valid = false;
-  do {
-    if (isNaN(passengerCount) || passengerCount < 1 || passengerCount > 9) {
-      alert("Please enter a valid number of passengers (1-9).");
-      break;
-    } else valid = true;
-  } while (!valid);
-
-  if (!valid) return;
-
-  flightsSection.classList.remove("hidden");
-  flightsContainer.innerHTML = "";
-
-  // while loop to render flights
-  let i = 0;
-  while (i < departFlights.length) {
-    const f = departFlights[i];
-    const card = document.createElement("div");
-    card.classList.add("flight-card");
-    card.innerHTML = `
-      <h4>${f.flightNo} - ${f.from} → ${f.to}</h4>
-      <p>Time: ${f.time} | Duration: ${f.duration}</p>
-      <p>Price: ₱${f.price}</p>
-      <p>Fare: ${f.fare}</p>
-      <button class='btn-primary selectFlight'>Select</button>
-    `;
-    flightsContainer.appendChild(card);
-    i++;
-  }
-
-  // if round trip → add return flights
-  if (type === "round") {
-    for (let j = 0; j < returnFlights.length; j++) {
-      const r = returnFlights[j];
-      const card = document.createElement("div");
-      card.classList.add("flight-card");
-      card.innerHTML = `
-        <h4>${r.flightNo} - ${r.from} → ${r.to}</h4>
-        <p>Time: ${r.time} | Duration: ${r.duration}</p>
-        <p>Price: ₱${r.price}</p>
-        <p>Fare: ${r.fare}</p>
-        <button class='btn-primary selectFlight'>Select</button>
-      `;
-      flightsContainer.appendChild(card);
-    }
-  }
-
-  document.querySelectorAll(".selectFlight").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".flight-card").forEach(c => c.classList.remove("selected"));
-      btn.parentElement.classList.add("selected");
-      toPassengerBtn.classList.remove("hidden");
-    });
+    returnDiv.style.display = (flightType.value === "oneway") ? "none" : "block";
   });
-});
 
-// === NEXT TO PASSENGER INFO ===
-toPassengerBtn.addEventListener("click", () => {
-  passengerSection.classList.remove("hidden");
-  passengerForm.innerHTML = "";
+  document.getElementById("searchFlights").addEventListener("click", () => {
+    const from = document.getElementById("from").value;
+    const to = document.getElementById("to").value;
+    const type = document.getElementById("flightType").value;
+    const depart = document.getElementById("departDate").value;
+    const ret = document.getElementById("returnDate").value;
+    const passengers = document.getElementById("passengers").value;
 
-  let count = parseInt(document.getElementById("passengerCount").value);
-  for (let i = 1; i <= count; i++) {
-    passengerForm.innerHTML += `
-      <div class='passenger'>
-        <h4>Passenger ${i}</h4>
-        <label>Full Name</label><input type='text' class='pname' required>
-        <label>Age</label><input type='number' class='page' min='1' required>
-      </div><hr>
-    `;
-  }
-});
+    if (!from || !to) return alert("Please select origin and destination.");
+    if (from === to) return alert("Origin and destination cannot be the same.");
+    if (!depart) return alert("Please select a departure date.");
+    if (type === "round" && !ret) return alert("Please select a return date.");
+    if (passengers < 1 || passengers > 9) return alert("Passengers must be between 1 and 9.");
 
-// === SUBMIT PASSENGER INFO ===
-document.getElementById("submitPassenger").addEventListener("click", (e) => {
-  e.preventDefault();
+    const flightData = { from, to, type, depart, ret, passengers };
+    localStorage.setItem("flightData", JSON.stringify(flightData));
+    window.location.href = "select.html";
+  });
+}
 
-  const names = [...document.querySelectorAll(".pname")].map(x => x.value);
-  const ages = [...document.querySelectorAll(".page")].map(x => x.value);
 
-  // simple validation
-  if (names.includes("") || ages.includes("")) {
-    alert("Please fill out all passenger fields!");
+function initSelect() {
+  const data = JSON.parse(localStorage.getItem("flightData"));
+  const container = document.getElementById("flightsContainer");
+  const title = document.getElementById("selectTitle");
+  const proceedBtn = document.getElementById("proceedToPassenger");
+  const backBtn = document.getElementById("backToBooking");
+
+  if (!data) {
+    window.location.href = "booking.html";
     return;
   }
 
-  summarySection.classList.remove("hidden");
-  summaryDetails.innerHTML = `
-    <h3>Passengers (${names.length})</h3>
-    <ul>${names.map((n,i)=>`<li>${n} - ${ages[i]} yrs old</li>`).join("")}</ul>
-    <p><b>Flight Selected:</b> ${
-      document.querySelector(".flight-card.selected h4")?.textContent || "None"
-    }</p>
-    <p><b>Total Fare:</b> ₱${(names.length * 2499).toLocaleString()}</p>
-  `;
-});
+  title.textContent = `${data.type === "round" ? "Round Trip" : "One Way"} Flights: ${data.from} → ${data.to}`;
+  container.innerHTML = "";
 
-// === BOOK NOW ===
-bookNowBtn.addEventListener("click", () => {
-  successMsg.classList.remove("hidden");
-});
+  if (data.type === "oneway") {
+    const available = oneWayFlights.filter(f => f.from === data.from && f.to === data.to && f.departDate === data.depart);
+
+    if (available.length === 0) {
+      container.innerHTML = `<div class="no-flights">No available flights on ${data.depart}.</div>`;
+    } else {
+      available.forEach(f => {
+        const div = document.createElement("div");
+        div.classList.add("flight-card");
+        div.innerHTML = `
+          <div class="left">${f.flightNo}<br>${f.from} → ${f.to}</div>
+          <div class="details">
+            <p><b>Departure:</b> ${f.departDate} | ${f.time}</p>
+            <p><b>Duration:</b> ${f.hours}</p>
+            <p><b>Terminal:</b> ${f.terminal}</p>
+            <p><b>Seats:</b> ${f.seats}</p>
+            <p><b>Fare Type:</b> ${f.fare}</p>
+            <p><b>Price:</b> ₱${f.price.toLocaleString()}</p>
+          </div>
+          <div class="action">
+            <button class="btn-primary selectBtn">Select Flight</button>
+          </div>
+        `;
+        container.appendChild(div);
+
+        div.querySelector(".selectBtn").addEventListener("click", () => {
+          document.querySelectorAll(".flight-card").forEach(c => c.classList.remove("selected"));
+          div.classList.add("selected");
+          localStorage.setItem("selectedFlight", JSON.stringify(f));
+          proceedBtn.disabled = false;
+        });
+      });
+    }
+  } else {
+    const available = roundTripFlights.filter(f =>
+      f.from === data.from && f.to === data.to &&
+      f.departDate === data.depart && f.returnDate === data.ret
+    );
+
+    if (available.length === 0) {
+      container.innerHTML = `<div class="no-flights">No available round trip flights for these dates.</div>`;
+    } else {
+      available.forEach(f => {
+        const div = document.createElement("div");
+        div.classList.add("flight-card");
+        div.innerHTML = `
+          <div class="left">${f.flightNo}<br>${f.from} → ${f.to}</div>
+          <div class="details">
+            <p><b>Departure:</b> ${f.departDate} (${f.departTime})</p>
+            <p><b>Return:</b> ${f.returnDate} (${f.returnTime})</p>
+            <p><b>Duration:</b> ${f.hours}</p>
+            <p><b>Terminal:</b> ${f.terminal}</p>
+            <p><b>Seats:</b> ${f.seats}</p>
+            <p><b>Fare:</b> ${f.fare}</p>
+            <p><b>Total Price:</b> ₱${f.price.toLocaleString()}</p>
+          </div>
+          <div class="action">
+            <button class="btn-primary selectBtn">Select Flight</button>
+          </div>
+        `;
+        container.appendChild(div);
+
+        div.querySelector(".selectBtn").addEventListener("click", () => {
+          document.querySelectorAll(".flight-card").forEach(c => c.classList.remove("selected"));
+          div.classList.add("selected");
+          localStorage.setItem("selectedFlight", JSON.stringify(f));
+          proceedBtn.disabled = false;
+        });
+      });
+    }
+  }
+
+  backBtn.addEventListener("click", () => {
+    window.location.href = "booking.html";
+  });
+
+  proceedBtn.addEventListener("click", () => {
+    if (!localStorage.getItem("selectedFlight")) {
+      alert("Please select a flight first.");
+      return;
+    }
+    window.location.href = "passenger.html";
+  });
+}
+
+
+function initPassenger() {
+  const flightData = JSON.parse(localStorage.getItem("flightData"));
+  const passengerDiv = document.getElementById("passengerFormWrap");
+  const submitBtn = document.getElementById("submitPassengers");
+  const editBtn = document.getElementById("editFlights");
+
+  if (!flightData) {
+    alert("No booking details found. Returning to booking page.");
+    window.location.href = "booking.html";
+    return;
+  }
+
+  const passengerCount = parseInt(flightData.passengers) || 1;
+  passengerDiv.innerHTML = "";
+
+  for (let i = 1; i <= passengerCount; i++) {
+    passengerDiv.innerHTML += `
+      <div class="passenger-block">
+        <h3>Passenger ${i}</h3>
+        <label>Full Name:</label><input type="text" class="pname" required>
+        <label>Passport No.:</label><input type="text" class="ppassport" required>
+        <label>Nationality:</label><input type="text" class="pnationality" required>
+        <label>Date of Birth:</label><input type="date" class="pdob" required>
+        <label>Phone:</label><input type="text" class="pphone" required>
+        <label>Email:</label><input type="email" class="pemail" required>
+      </div>
+    `;
+  }
+
+  editBtn.addEventListener("click", () => window.location.href = "select.html");
+
+  submitBtn.addEventListener("click", () => {
+    const names = document.querySelectorAll(".pname");
+    const passports = document.querySelectorAll(".ppassport");
+    const emails = document.querySelectorAll(".pemail");
+
+    for (let i = 0; i < passengerCount; i++) {
+      if (!names[i].value.trim() || !passports[i].value.trim() || !emails[i].value.trim()) {
+        alert(`Please complete all fields for Passenger ${i + 1}.`);
+        return;
+      }
+    }
+
+    const passengers = [];
+    for (let i = 0; i < passengerCount; i++) {
+      passengers.push({
+        name: names[i].value.trim(),
+        passport: passports[i].value.trim(),
+        nationality: document.querySelectorAll(".pnationality")[i].value.trim(),
+        dob: document.querySelectorAll(".pdob")[i].value.trim(),
+        phone: document.querySelectorAll(".pphone")[i].value.trim(),
+        email: emails[i].value.trim()
+      });
+    }
+
+    localStorage.setItem("passengerData", JSON.stringify(passengers));
+    window.location.href = "success.html";
+  });
+}
+
+
+function initSuccess() {
+  const flight = JSON.parse(localStorage.getItem("selectedFlight"));
+  const passengers = JSON.parse(localStorage.getItem("passengerData"));
+  const content = document.getElementById("successContent");
+  const bookBtn = document.getElementById("bookNow");
+
+  if (!flight || !passengers) {
+    alert("Missing booking data. Redirecting...");
+    window.location.href = "booking.html";
+    return;
+  }
+
+  
+  let html = `
+    <h3>Flight Summary</h3>
+    <p><b>Flight:</b> ${flight.flightNo} — ${flight.from} → ${flight.to}</p>
+    <p><b>Departure:</b> ${flight.departDate} (${flight.departTime || flight.time})</p>
+  `;
+
+  if (flight.returnDate) {
+    html += `<p><b>Return:</b> ${flight.returnDate} (${flight.returnTime})</p>`;
+  }
+
+  html += `
+    <hr><h3>Passengers (${passengers.length})</h3>
+    <ul>${passengers.map(p => 
+      `<li><b>${p.name}</b> — ${p.passport}, ${p.nationality}, ${p.dob}, ${p.email}</li>`
+    ).join("")}</ul>
+    <hr><p><b>Total Price:</b> ₱${(flight.price * passengers.length).toLocaleString()}</p>
+  `;
+
+  content.innerHTML = html;
+
+  
+  bookBtn.addEventListener("click", () => {
+    alert("✅ Booking Successful! Thank you for flying with Cebu Pacific Airlines.");
+    localStorage.clear();
+    window.location.href = "home.html"; 
+  });
+}
+
+

@@ -1,250 +1,148 @@
 :root{
-  --primary: #6b5b95;
-  --secondary: #feb47b; 
-  --accent: #88d8b0; 
-  --text: #2b2b2b;
-  --bg: #faf9f6;
-  --card-bg: #ffffff;
-  --border: #e2e0dc;
-
-
+  --yellow:#FFD200;
+  --blue:#0072CE;
+  --muted:#6b7280;
+  --bg:#f6f9fc;
+  --card:#fff;
+  --shadow:0 8px 20px rgba(2,6,23,0.06);
+  --radius:12px;
+  --maxw:1100px;
+  --accent-text:#052d5a;
 }
- body{
-  font-family: "Poppins",sans-serif;
-  background: var(--bg);
+
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial;background:var(--bg);color:var(--accent-text)}
+a{color:inherit;text-decoration:none}
+
+
+.header{
+  background:linear-gradient(90deg,var(--yellow),#ffd64a 40%,var(--blue));
+  padding:18px 28px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  box-shadow:0 6px 14px rgba(0,0,0,0.06);
+}
+.brand{display:flex;align-items:center;gap:12px}
+.logo{width:56px;height:56px;border-radius:10px;background:#fff;color:var(--blue);display:flex;align-items:center;justify-content:center;font-weight:700}
+.brand h1{margin:0;font-size:18px}
+.brand p{margin:0;font-size:12px;color:rgba(5,45,90,0.9)}
+
+
+.container{max-width:var(--maxw);margin:28px auto;padding:0 18px}
+.card{background:var(--card);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow);border:1px solid rgba(2,6,23,0.03);margin-bottom:18px}
+
+
+.h2{font-size:18px;color:var(--blue);margin:0 0 12px;font-weight:700}
+.label-sub{height:4px;background:linear-gradient(90deg,var(--yellow),var(--blue));border-radius:2px;margin-bottom:12px}
+
+
+.form-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+label{display:block;font-weight:600;color:var(--muted);margin-bottom:6px}
+input,select{width:100%;padding:10px;border-radius:8px;border:1px solid #e6eef8;background:#fff;color:var(--accent-text)}
+input[type="date"]{padding:9px}
+
+
+.btn-row{text-align:right;margin-top:12px}
+.btn-primary{background:var(--blue);color:#fff;padding:10px 16px;border-radius:10px;border:0;cursor:pointer;font-weight:700}
+.btn-ghost{background:transparent;border:1px solid rgba(0,114,206,0.12);color:var(--blue);padding:8px 12px;border-radius:8px;cursor:pointer}
+
+
+.flights-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.flights-list{display:flex;flex-direction:column;gap:10px}
+.flight-card{display:flex;justify-content:space-between;align-items:center;padding:12px;border-radius:10px;background:#fbfdff;border:1px solid rgba(2,6,23,0.03)}
+.flight-card .meta{color:var(--muted);font-size:13px}
+.flight-card:hover{box-shadow:0 6px 18px rgba(0,114,206,0.06)}
+.flight-card.selected{outline:3px solid rgba(255,210,0,0.18);border-color:var(--yellow)}
+
+.passenger-block{padding:12px;border-radius:8px;border:1px solid rgba(2,6,23,0.04);background:#fff}
+.pass-row{display:flex;gap:8px}
+.pass-row> *{flex:1}
+
+
+.message{margin-top:10px;color:#b42b2b;font-weight:700}
+.no-flights{padding:20px;border-radius:10px;background:#fff8f0;border:1px solid #ffdcb3;color:#7a3b00}
+
+
+.summary-block{background:#fbfdff;padding:12px;border-radius:8px;border:1px solid rgba(2,6,23,0.03)}
+.success{background:#e6ffea;padding:12px;border-radius:8px;border:1px solid #b7f3cd;color:#0a6b2f}
+
+
+.hidden{display:none}
+.small{font-size:13px;color:var(--muted)}
+.center{text-align:center}
+
+
+
+.flight-card {
+  display: grid;
+  grid-template-columns: 1.2fr 2.5fr auto;
+  align-items: center;
+  background: #fff;
+  border: 1px solid rgba(2,6,23,0.08);
+  border-radius: 12px;
+  padding: 18px 22px;
+  margin: 16px 0;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: 0.2s ease;
+}
+
+.flight-card:hover {
+  box-shadow: 0 6px 14px rgba(0, 114, 206, 0.15);
+  transform: translateY(-2px);
+}
+
+.flight-card .left {
+  font-weight: 700;
+  color: #003580;
+  font-size: 18px;
+}
+
+.flight-card .details {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px 14px;
+  font-size: 14px;
+  color: #444;
+}
+
+.flight-card .details p {
   margin: 0;
-  color: var(--text);
-  line-height: 1.6;
+}
 
- }
+.flight-card .details b {
+  color: #003580;
+}
 
- .topbar{
-  background: linear-gradient(90deg, var(--primary), var(--secondary));
+.flight-card .action {
+  text-align: right;
+}
+
+.flight-card .btn-primary {
+  padding: 8px 14px;
+  font-size: 14px;
+  border-radius: 8px;
+}
+
+
+
+header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 24px;
-  color: #fff;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-
- }
- .topbar .brand {
-  display: flex;
-  align-items: center;
-  gap: 17px;
- 
- }
- 
- .topbar .logo {
-  font-size: 30px;
+  padding: 15px 30px;
 }
 
-.topbar h1 {
-  margin: 0;
-  font-size: 20px;
-  font-weight: 600px;
-
-}
-
-.topbar p {
-  margin: 0;
-  font-size: 12px;
-  opacity: 0.9;
-
-}
-
-.btn-home {
-
-  background: #fff;
-  color: var(--primary);
-  padding: 6px 14px;
-  border-radius: 8px;
+header .home-link {
+  position: absolute;
+  top: 15px;
+  right: 30px;
+  font-weight: bold;
+  color: #007bff;
   text-decoration: none;
-
-   font-weight: 600;
-   transition: 0.3s;
-
-}
-.btn-home:hover {
-  background: var(--secondary);
-  color: #fff;
-
 }
 
-.container {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 20px;
-
-}
-
-
-.card {
-  background: var(--card-bg);
-  border-radius: 14px;
-  padding: 24px;
-  border: 1px solid var(--border);
-  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
-  margin-bottom: 24px;
-  transition: 0.3s;
-
-}
-
-.card:hover {
-  box-shadow: 0 5px 16px rgba(0, 0, 0, 0.08);
-}
-
-h2 {
-  color: var(--primary);
-  border-bottom: 2px solid var(--secondary);
-  padding-bottom: 8px;
-  font-size: 22px;
-
-}
-.form-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 18px;
-}
-
-label {
-  font-weight: 600;
-  display: block;
-  margin-bottom: 6px;
-
-}
-input, select {
-    width: 100%;
-    border-radius: 8px;
-    padding: 5px;
-    border: 1px solid var(--border);
-    background: #faf3f3;
-    transition: border-color 0.2s, box-shadow 0.2s;
-}
-
-input:focus, select:focus {
-  border-color: var(--accent);
-  box-shadow: 0 0 6px rgba(136, 216, 176, 0.3);
-  outline: none;
-}
-
-.btn-primary {
-  background: var(--primary);
-  margin-top: 10px; 
-  color: #fff;
-  padding: 10px 22px;
-  border: none;
-  border-radius: 8px;
-    cursor: pointer;
-    font-weight: 600;
-    transition: 0.3s;
-}
-.btn-primary:hover {
-  background: var(--secondary);
-  color: #fff;
-}
-.btn-row {
-  margin-top: 15px;
-  text-align: right;
-  
-}
-
-  .flights-grid {
-   display: grid;
-   grid-template-columns: 1fr 1fr;
-   gap: 20px;
-   margin-top: 15px;
-} 
-
-.flight-card {
-   background: var(--card-bg);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 14px;
-     transition: 0.25s; 
-}
-.flight-card:hover {
-   border-color: var(--accent);
-    background: #f6fffa;
-}
-.flight-card.selected {
-  border-color: var(--secondary);
-  box-shadow: 0 0 10px rgba(254, 180, 123, 0.5);
-} 
- 
- .success {
-  background: #e9fff2;
-  color: #247a46;
-  padding: 12px;
-  border-radius: 8px;
-  margin-top: 15px;
-  border: 1px solid #b7f3cd;
-}
-  .hidden {
-  display: auto;
-
-}
-
-  .home-header {
-    background: linear-gradient(90deg, var(--primary), var(--secondary));
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 20px 30px;
-    color: #fff;
-
-}
-
-.home-brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-
-}
-.home-brand .logo {
-  font-size: 30px;
-}
-.home-main {
-  background: var(--bg);
-  padding: 70px 0;
-}
-
-.hero {
-  max-width: 1000px;
-  margin: auto;
-  display: flex;
-   justify-content: space-between;
-   align-items: center;
-   gap: 40px;
-   padding: 0 30px;
-
-}
-.hero-text h2 {
-  color: var(--primary);
-  font-size: 36px;
-  margin-bottom: 12px;
-}
-
-.hero-text p {
-  font-size: 17px;
-  color: #555;
-  margin-bottom: 25px;
-  max-width: 450px;
-
-}
-.hero-image img {
-  max-width: 340px;
-}
-
-.btn-primary.big {
-  font-size: 18px;
-  padding: 14px 30px;
-}
-.home-footer {
-  background: #fff;
-  border-top: 1px solid #eee;
-  text-align: center;
-  padding: 15px;
-  font-size: 13px;
-  color: #777;
+header .home-link:hover {
+  text-decoration: underline;
 }
